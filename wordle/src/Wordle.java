@@ -17,18 +17,19 @@ public class Wordle {
             allowedGuesses.addAll(Files.readAllLines(Paths.get("data/wordle-allowed-guesses.txt")));
             answers.addAll(Files.readAllLines(Paths.get("data/wordle-answers-alphabetical.txt")));
         } catch(IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            System.out.println("Error: Failed to read data files.");
+            return;
         }
 
         List<String> answerList = new ArrayList<>(answers);
         Random rand = new Random();
         String answer = answerList.get(rand.nextInt(answerList.size()));
 
-        System.out.println(BOLD + "Wordle" + RESET+ "\nGuess a 5-letter word.");
+        System.out.println(BOLD + "Wordle" + RESET+ "\nGet 6 chances to guess a 5-letter word.");
         Scanner sc = new Scanner(System.in);
-        int guesses = 0;
+        int numGuesses = 0;
 
-        while(guesses < 6) {
+        while(numGuesses < 6) {
             System.out.print("> ");
             String guess = sc.nextLine().toLowerCase();
 
@@ -37,14 +38,14 @@ public class Wordle {
             } else if (!(allowedGuesses.contains(guess) || answers.contains(guess))) {
                 System.out.println("Not in word list.");
             } else {
-                ++guesses;
+                ++numGuesses;
 
                 if (guess.equals(answer)) {
                     for (char ch : guess.toCharArray()) {
                         System.out.print(GREEN_BG + " " + Character.toUpperCase(ch) + " " + RESET + " ");
                     }
 
-                    System.out.println("\nAnswer: " + BOLD + answer.toUpperCase() + RESET + "\nGuesses: " + guesses + "/6\nCongratulations!");
+                    System.out.println("\nAnswer: " + BOLD + answer.toUpperCase() + RESET + "\nGuesses: " + numGuesses + "/6\nCongratulations!");
                     sc.close();
                     return;
                 } else {
