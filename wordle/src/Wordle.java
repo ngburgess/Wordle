@@ -26,9 +26,9 @@ public class Wordle {
 
         System.out.println(BOLD + "Wordle" + RESET+ "\nGuess a 5-letter word.");
         Scanner sc = new Scanner(System.in);
-        int guesses = 6;
+        int guesses = 0;
 
-        while(guesses > 0) {
+        while(guesses < 6) {
             System.out.print("> ");
             String guess = sc.nextLine().toLowerCase();
 
@@ -37,14 +37,14 @@ public class Wordle {
             } else if (!(allowedGuesses.contains(guess) || answers.contains(guess))) {
                 System.out.println("Not in word list.");
             } else {
-                --guesses;
+                ++guesses;
 
                 if (guess.equals(answer)) {
                     for (char ch : guess.toCharArray()) {
                         System.out.print(GREEN_BG + " " + Character.toUpperCase(ch) + " " + RESET + " ");
                     }
 
-                    System.out.println("\nAnswer: " + BOLD + answer.toUpperCase() + RESET + "\nCongratulations!");
+                    System.out.println("\nAnswer: " + BOLD + answer.toUpperCase() + RESET + "\nGuesses: " + guesses + "/6\nCongratulations!");
                     sc.close();
                     return;
                 } else {
@@ -87,7 +87,7 @@ public class Wordle {
             }
         }
 
-        System.out.println("Answer: " + BOLD + answer.toUpperCase() + RESET + "\nBetter luck next time!");
+        System.out.println("Answer: " + BOLD + answer.toUpperCase() + RESET + "\nGuesses: X/6\nBetter luck next time!");
         sc.close();
     }
 }
